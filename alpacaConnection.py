@@ -1,12 +1,12 @@
-import numpy as np
-import pandas as pd
-import yaml
-from time import sleep
 from alpaca.data.live import StockDataStream
 from alpaca.data.enums import DataFeed
+import logging
+
+logger = logging.getLogger(__name__)
 
 def getStreamingConnection(key, secret):
     conn = StockDataStream(key, secret, DataFeed.IEX)
+    logger.info("Establishing connection with alpaca API")
     return conn
 
 async def handle_trade(data):
@@ -16,3 +16,4 @@ async def handle_trade(data):
 def subscribeToStream(client, symbols):
     client.subscribe_bars(handle_trade, symbols)
     client.run()
+    logger.info(f"Subscribed to {symbols}")
