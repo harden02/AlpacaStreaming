@@ -1,11 +1,9 @@
-import numpy as np
-import pandas as pd
-import asyncio
+import logging
+import sys
 import yaml
-from time import sleep
-from alpaca.data.timeframe import TimeFrame
-from alpaca.data.live import StockDataStream
 import alpacaConnection as ac
+
+logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 
 def main():
     config = yaml.safe_load(open("API.yaml"))

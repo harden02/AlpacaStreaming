@@ -1,6 +1,7 @@
 from alpaca.data.live import StockDataStream
 from alpaca.data.enums import DataFeed
 import logging
+import pubsubHandler as ps
 
 logger = logging.getLogger(__name__)
 
@@ -10,10 +11,10 @@ def getStreamingConnection(key, secret):
     return conn
 
 async def handle_trade(data):
-    print(data)
-
+    logger.info(f"data is {data}")
+    #ps.publishMessage(data)
 
 def subscribeToStream(client, symbols):
     client.subscribe_bars(handle_trade, symbols)
-    client.run()
     logger.info(f"Subscribed to {symbols}")
+    client.run()
