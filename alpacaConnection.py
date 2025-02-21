@@ -12,7 +12,7 @@ def getStreamingConnection(key, secret):
 
 async def handle_trade(data):
     logger.info(f"data is {data}")
-    #ps.publishMessage(data)
+    ps.publishMessage(data)
 
 def subscribeToStream(client, symbols):
     client.subscribe_bars(handle_trade, symbols)
