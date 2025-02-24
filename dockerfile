@@ -1,6 +1,8 @@
-from python:3.12-alpine
+FROM python:3.12-alpine
 
-COPY . /app
-WORKDIR /app
-RUN pip install -r requirements.txt
-CMD ["gunicorn", "-w 4", "main:app"]
+COPY requirements.txt requirements.txt
+RUN pip3 install -r requirements.txt
+
+COPY . .
+
+CMD ["python3", "main.python"]

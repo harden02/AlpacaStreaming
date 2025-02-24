@@ -1,0 +1,4 @@
+*.md
+*.txt
+!requirements.txt
+**/.git
