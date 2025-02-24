@@ -3,9 +3,9 @@ import sys
 import yaml
 import alpacaConnection as ac
 
-logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 
 def main():
+    logging.basicConfig(stream=sys.stdout, level=logging.INFO)
     config = yaml.safe_load(open("API.yaml"))
     connection = ac.getStreamingConnection(config['Key'], config['Secret'])
     ac.subscribeToStream(connection, 'AAPL')
