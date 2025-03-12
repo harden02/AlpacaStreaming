@@ -9,7 +9,7 @@ pubSubConfig = yaml.safe_load(open("config.yaml"))
 def publishMessage(message):
     publisher = pubsub.PublisherClient()
     psAddress = 'projects/{project}/topics/{topic}'.format(
-        project = pubSubConfig['projectID'],
+        project = pubSubConfig['projectId'],
         topic = pubSubConfig['pubSubTopic'],  
     )
     logger.info(f"publishing message to {psAddress}, message: {message}")
