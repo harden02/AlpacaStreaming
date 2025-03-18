@@ -1,6 +1,6 @@
 # AlpacaStreaming
 
-Pipeline to stream alpaca market data from Python API to GCP BigQuery. In the future I am planning on using GCP DataFlow to transform the data and create some further features/rolling metrics.
+Pipeline to stream alpaca market data from Python API to GCP BigQuery. There is still work to be done in getting the container to authenticate properly within GKE and converting the market data dict to a publishable format. In the future I am planning on using GCP DataFlow to transform the data and create some further features/rolling metrics.
 
 ## Features
 
