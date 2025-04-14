@@ -23,7 +23,7 @@ Pipeline to stream alpaca market data from Python API to GCP BigQuery. In the fu
 
 3. **Configuration:**
    Create a configuration file `api.yaml` with your Alpaca API credentials. Remember to keep these private and never feature them in a repository!
-   Do the same with a config.yaml for your GCP Pub/Sub details:
+   Do the same with a `config.yaml` for your GCP Pub/Sub details:
    ```yaml
    Key: 'YourAlpacaAPIKey'
    Secret: 'YourAlpacaAPISecret'
@@ -110,7 +110,8 @@ Pipeline to stream alpaca market data from Python API to GCP BigQuery. In the fu
    ```bash
    bq add-iam-policy-binding --member="serviceAccount:service-<project number>@gcp-sa-pubsub.iam.gserviceaccount.com" --role=roles/bigquery.dataEditor -t "<dataset>.<table>"
    ```
-   From there you need to set up a BigQuery streaming subscription for the topic to be able to write data directly into BQ. View the documentation here: https://cloud.google.com/pubsub/docs/bigquery. Make sure to set the appropriate schema so that the topic can write to your BQ table. You'll also need to ensure it complies with the custom JSON object mapping in the pubsubhandler so that all schema titles match across the whole pipeline.
+   From there you need to set up a BigQuery streaming subscription for the topic to be able to write data directly into BQ. View the documentation here: https://cloud.google.com/pubsub/docs/bigquery. Make sure to set the appropriate schema so that the topic can write to your BQ table. You'll also need to ensure it complies with the custom JSON object mapping in the `pubsubHandler.py` so that all schema titles match across the whole pipeline.
+
    You will then need to create a file holding your service account information so that the container can authenticate to GCP resources. Using the service account of your choice, navigate to it in the console under the service accounts tab and download a JSON key using the "add key" function. Place this JSON in your application and point to it in your dockerfile as an environment variable like below:
    ```bash
    ENV GOOGLE_APPLICATION_CREDENTIALS="your-svc-key.json"
