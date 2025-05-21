@@ -113,6 +113,7 @@ Pipeline to stream alpaca market data from Python API to GCP BigQuery. In the fu
    From there you need to set up a BigQuery streaming subscription for the topic to be able to write data directly into BQ. View the documentation here: https://cloud.google.com/pubsub/docs/bigquery. Make sure to set the appropriate schema so that the topic can write to your BQ table. You'll also need to ensure it complies with the custom JSON object mapping in the `pubsubHandler.py` so that all schema titles match across the whole pipeline.
 
    You will then need to create a file holding your service account information so that the container can authenticate to GCP resources. Using the service account of your choice, navigate to it in the console under the service accounts tab and download a JSON key using the "add key" function. Place this JSON in your application and point to it in your dockerfile as an environment variable like below:
+   IMPORTANT: NEVER expose this file publically, make sure it remains out of any public github repo and is only ever built into a docker container which you do not publically distribute.
    ```bash
    ENV GOOGLE_APPLICATION_CREDENTIALS="your-svc-key.json"
 
