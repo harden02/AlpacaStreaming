@@ -1,6 +1,7 @@
 # AlpacaStreaming
 
-Pipeline to stream alpaca market data from Python API to GCP BigQuery. In the future I am planning on using GCP DataFlow to transform the data and create some further features/rolling metrics.
+Pipeline to stream alpaca market data from Python API to GCP BigQuery. This can be used on its own as outlined below or be combined with a Dataflow pipeline for real-time analytics.
+See the Dataflow pipeline here: https://github.com/harden02/StocksDataflow
 
 ## Features
 
@@ -106,11 +107,12 @@ Pipeline to stream alpaca market data from Python API to GCP BigQuery. In the fu
     "fields": []
    }
    ```
-   After this you need to set up a GCP Pub/Sub topic which has a service account that is Authenticated to write to BigQuery. This can be done either through the console or through the cloud shell with the           following:
+   If you are using dataflow to compute real-time metrics, make sure these are also included in your BQ schema.
+   After this you need to set up a GCP Pub/Sub topic which has a service account that is Authenticated to write to BigQuery, or a topic which Dataflow can read from with a pull subscription. This can be done either through the console or through the cloud shell with the following:
    ```bash
    bq add-iam-policy-binding --member="serviceAccount:service-<project number>@gcp-sa-pubsub.iam.gserviceaccount.com" --role=roles/bigquery.dataEditor -t "<dataset>.<table>"
    ```
-   From there you need to set up a BigQuery streaming subscription for the topic to be able to write data directly into BQ. View the documentation here: https://cloud.google.com/pubsub/docs/bigquery. Make sure to set the appropriate schema so that the topic can write to your BQ table. You'll also need to ensure it complies with the custom JSON object mapping in the `pubsubHandler.py` so that all schema titles match across the whole pipeline.
+   From there you need to set up a BigQuery streaming subscription for the topic to be able to write data directly into BQ. View the documentation here: https://cloud.google.com/pubsub/docs/bigquery. Make sure to set the appropriate schema so that the topic can write to your BQ table. You'll also need to ensure it complies with the custom JSON object mapping in the `pubsubHandler.py` so that all schema titles match across the whole pipeline. If you are using Dataflow, simply create a pull subscription for the pipeline to subscribe to.
 
    You will then need to create a file holding your service account information so that the container can authenticate to GCP resources. Using the service account of your choice, navigate to it in the console under the service accounts tab and download a JSON key using the "add key" function. Place this JSON in your application and point to it in your dockerfile as an environment variable like below:
    ```bash
